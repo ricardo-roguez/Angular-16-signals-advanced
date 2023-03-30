@@ -1,0 +1,9 @@
+/* Add application styles & imports to this file! */
+.main-component {
+  display: flex;
+  justify-content: space-between;
+}
+
+* {
+  margin: 5px;
+}

@@ -1,0 +1,16 @@
+<div class="list-group">
+  <div class='item-container list-group-item'>
+    <div class="item-data">
+      <span>{{ item.concept }} </span> <span> Total factura: {{ item.amount }} € </span> <span> Estado: {{ item.status }}</span>
+    </div>
+    <div>
+      <button class="btn btn-success" *ngIf="item.status === 'PENDING'" (click)="changeToDone()">
+        Pasar a done
+      </button>
+      <button class="btn btn-secondary" *ngIf="item.status === 'DONE'" (click)="changeToPending()">
+        Pasar a pending
+      </button>
+    </div>
+  </div>
+  
+</div>

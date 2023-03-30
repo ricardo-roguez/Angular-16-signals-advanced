@@ -1,0 +1,23 @@
+:host {
+  margin: 0;
+}
+
+.item-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-width: 200px;
+  width: 100%;
+}
+
+.item-data {
+  display: grid;
+  width: 100%;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 10px;
+}
+
+.btn {
+  width: 150px;
+  min-width: 150px;
+}

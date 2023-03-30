@@ -1,0 +1,8 @@
+<p>Facturas en <span class="badge text-bg-success">Done</span> {{ finishedCount() }}</p>
+<p>Total facturado facturas en <span class="badge text-bg-success">Done</span> {{ totalAmount() }}
+
+<app-invoice-item
+  [item]="invoiceItem"
+  *ngFor="let invoiceItem of invoiceListArray()"
+>
+</app-invoice-item>
