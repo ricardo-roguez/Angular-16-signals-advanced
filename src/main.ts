@@ -1,20 +1,6 @@
-import 'zone.js/dist/zone';
-import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { bootstrapApplication } from '@angular/platform-browser';
-import { InvoiceListComponent } from './components/invoice-list/invoice-list.component';
+import 'zone.js';
 
-@Component({
-  selector: 'my-app',
-  standalone: true,
-  imports: [InvoiceListComponent, CommonModule],
-  template: `
-    <h1>Testing Signals!</h1>
-    <div class='main-component'>
-      <app-invoice-list />
-    </div>
-  `,
-})
-export class App {}
-
-bootstrapApplication(App);
+import { platformBrowserDynamic } from "@angular/platform-browser-dynamic";
+import { AppModule } from "./app.module";
+platformBrowserDynamic().bootstrapModule(AppModule)
+  .catch(err => console.error(err));

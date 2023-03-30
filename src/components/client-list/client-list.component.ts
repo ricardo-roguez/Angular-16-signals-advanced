@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
 export class ClientListComponent {
   route = inject(Router)
   goToClient(clientId): void {
-    this.route.navigate(['/client', { id: clientId }])
+    this.route.navigate([`/client/${clientId}`])
   }
 
 }
