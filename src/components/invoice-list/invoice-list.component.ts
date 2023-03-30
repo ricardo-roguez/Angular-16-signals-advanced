@@ -17,6 +17,7 @@ export class InvoiceListComponent implements OnInit {
   private route = inject(Router);
   private activatedRoute = inject(ActivatedRoute);
   private invoiceService = inject(InvoiceService);
+  
   private invoicesInDoneSignabble = computed(() => this.invoiceListArray().filter((item) => item.status === 'DONE'));
   
   invoiceListArray: SettableSignal<Invoice[]>;
