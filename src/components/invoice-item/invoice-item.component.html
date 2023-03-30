@@ -1,7 +1,9 @@
 <div class="list-group">
   <div class='item-container list-group-item'>
     <div class="item-data">
-      <span>{{ item.concept }} </span> <span> Total factura: {{ item.amount }} € </span> <span> Estado: {{ item.status }}</span>
+      <span>{{ item.concept }} </span> 
+      <span> Total factura: {{ item.amount }} € </span>
+      <span> Estado: <span [ngClass]="{'badge text-bg-success': item.status==='DONE'}" class="badge text-bg-success"> {{ item.status }}</span> </span>
     </div>
     <div>
       <button class="btn btn-success" *ngIf="item.status === 'PENDING'" (click)="changeToDone()">
@@ -12,5 +14,4 @@
       </button>
     </div>
   </div>
-  
 </div>

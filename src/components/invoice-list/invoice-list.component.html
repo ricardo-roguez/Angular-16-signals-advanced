@@ -1,5 +1,7 @@
+<p><button type="button" class="btn btn-link" (click)="backToClientList()">Volver al listado de clientes</button></p>
+
 <p>Facturas en <span class="badge text-bg-success">Done</span> {{ finishedCount() }}</p>
-<p>Total facturado facturas en <span class="badge text-bg-success">Done</span> {{ totalAmount() }}
+<p>Total facturado facturas en <span class="badge text-bg-success">Done</span> {{ totalAmount() }}</p>
 
 <app-invoice-item
   [item]="invoiceItem"

@@ -1,10 +1,8 @@
 import { CommonModule } from '@angular/common';
 import {
   Component,
-  EventEmitter,
   inject,
   Input,
-  SettableSignal,
 } from '@angular/core';
 import { Invoice } from '../../interfaces/invoice';
 import { InvoiceService } from '../../services/invoice.service';
