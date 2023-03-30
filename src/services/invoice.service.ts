@@ -1,7 +1,7 @@
+import { HttpClient } from '@angular/common/http';
 import { effect, Injectable, SettableSignal, signal } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { map, Observable, of, tap, } from 'rxjs';
 import { Invoice } from '../interfaces/invoice';
-import { FAKE_INVOICE_LIST } from '../mocks/invoice.list.mocks';
 
 @Injectable({
   providedIn: 'root',
@@ -13,21 +13,29 @@ export class InvoiceService {
   invoiceList: SettableSignal<Invoice[] | null> = signal(null);
   invoiceItem: SettableSignal<Invoice | null> = signal(null);
 
-  constructor() {
+  constructor(private httpClient: HttpClient) {
     this.listenItemEffects();
     this.listenItemListEffects();
   }
 
   getInvoicesByClient(clientId: number): Observable<SettableSignal<Invoice[]>> {
     this.clientId = clientId;
-    const itemsFromStorage = this.getItemsFromStorage();
-    this.invoiceList.set(itemsFromStorage);
-    return of(this.invoiceList);
+    return this.getItemsFromStorage();
+
   }
 
-  getItemsFromStorage(): Invoice[] {
+  getItemsFromStorage():  Observable<SettableSignal<Invoice[]>> {
     const itemsStr = localStorage.getItem(`${this.localStorageItemName}-${this.clientId}`);
-    return itemsStr ? JSON.parse(itemsStr) : FAKE_INVOICE_LIST;
+    if (itemsStr) {
+      this.invoiceList.set(JSON.parse(itemsStr));
+      return of(this.invoiceList)
+    } else {
+      return this.httpClient.get('assets/invoice-list.json')
+        .pipe(
+          tap((data: Invoice[]) => this.invoiceList.set(data)), 
+          map(() => this.invoiceList)
+        )
+    }
   }
 
   private listenItemEffects(): void {
@@ -43,10 +51,6 @@ export class InvoiceService {
 
   private listenItemListEffects(): void {
     effect(() => {
-      if(this.invoiceList() === null) {
-        return;
-      }
-
       localStorage.setItem(`${this.localStorageItemName}-${this.clientId}`, JSON.stringify(this.invoiceList()));
     });
   }
