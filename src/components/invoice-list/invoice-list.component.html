@@ -1,10 +1,15 @@
-<p><button type="button" class="btn btn-link" (click)="backToClientList()">Volver al listado de clientes</button></p>
+<div>
+  <button type="button" class="btn btn-link" (click)="backToClientList()">
+    Volver al listado de clientes
+  </button>
+  <p>Facturas en <span class="badge text-bg-success">Done</span> {{ finishedCount() }} de {{ invoiceListArray().length }}</p>
+  <p>Total facturado facturas en <span class="badge text-bg-success">Done</span> {{ totalAmount() }}</p>
+</div>
 
-<p>Facturas en <span class="badge text-bg-success">Done</span> {{ finishedCount() }}</p>
-<p>Total facturado facturas en <span class="badge text-bg-success">Done</span> {{ totalAmount() }}</p>
+<div class="list-group">
+  <app-invoice-item
+    [item]="invoiceItem"
+    *ngFor="let invoiceItem of invoiceListArray()">
+  </app-invoice-item>
+</div>
 
-<app-invoice-item
-  [item]="invoiceItem"
-  *ngFor="let invoiceItem of invoiceListArray()"
->
-</app-invoice-item>
