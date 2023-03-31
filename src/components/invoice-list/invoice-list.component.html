@@ -1,10 +1,10 @@
-<div>
+<p>
   <button type="button" class="btn btn-link" (click)="backToClientList()">
     Volver al listado de clientes
   </button>
-  <p>Facturas en <span class="badge text-bg-success">Done</span> {{ finishedCount() }} de {{ invoiceListArray().length }}</p>
-  <p>Total facturado facturas en <span class="badge text-bg-success">Done</span> {{ totalAmount() }}</p>
-</div>
+</p>
+<p>Facturas en <span class="badge text-bg-success">Done</span> {{ finishedCount() }} de {{ invoiceListArray().length }}</p>
+<p>Total facturado facturas en <span class="badge text-bg-success">Done</span> {{ totalAmount() }}</p>
 
 <div class="list-group">
   <app-invoice-item
