@@ -52,6 +52,9 @@ export class InvoiceService {
 
   private listenItemListEffects(): void {
     effect(() => {
+      if (this.invoiceList() === null) {
+        return;
+      }
       localStorage.setItem(`${this.localStorageItemName}-${this.clientId}`, JSON.stringify(this.invoiceList()));
     });
   }
