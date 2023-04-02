@@ -20,25 +20,25 @@ export class InvoiceListComponent implements OnInit {
 
   invoicesInDone: Signal<Invoice[]> = signal([]);
   invoiceList: Signal<Invoice[]> = signal([]);
-  totalAmount: Signal<number> = signal(0);
+  totalAmountInDone: Signal<number> = signal(0);
 
   ngOnInit() {
     this.activatedRoute.params
       .pipe(
-        map(data => data.id),
-        switchMap((id) => this.invoiceService.getInvoicesByClient(id)),
-        tap((data) => this.invoiceList = data),
+        map(params => params.id),
+        switchMap((clientId: number) => this.invoiceService.getInvoicesByClient(clientId)),
+        tap((data: Signal<Invoice[]>) => this.invoiceList = data),
         tap(() => this.initSignals())
       )
-      .subscribe()   
+      .subscribe();   
   }
 
   backToClientList(): void {
-    this.route.navigate(['/'])
+    this.route.navigate(['/']);
   }
 
   private initSignals() {
     this.invoicesInDone = computed(() => this.invoiceList().filter((item) => item.status === 'DONE'));
-    this.totalAmount = computed(() => this.invoicesInDone().reduce((accumulator, invoice) =>  accumulator + invoice.amount, 0));
+    this.totalAmountInDone = computed(() => this.invoicesInDone().reduce((accumulator, invoice) =>  accumulator + invoice.amount, 0));
   }
 }

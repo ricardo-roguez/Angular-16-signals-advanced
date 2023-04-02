@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { effect, Injectable, SettableSignal, signal } from '@angular/core';
+import { effect, Injectable, SettableSignal, Signal, signal } from '@angular/core';
 import { map, Observable, of, tap, } from 'rxjs';
 import { Invoice } from '../interfaces/invoice';
 
@@ -20,7 +20,7 @@ export class InvoiceService {
     this.listenItemListEffects();
   }
 
-  getInvoicesByClient(clientId: number): Observable<SettableSignal<Invoice[]>> {
+  getInvoicesByClient(clientId: number): Observable<Signal<Invoice[]>> {
     this.clientId = clientId;
     const itemsStr = localStorage.getItem(`${this.localStorageItemName}-${this.clientId}`);
 
@@ -36,7 +36,6 @@ export class InvoiceService {
     }
   }
   
-
   private listenItemEffects(): void {
     effect(() => {
       if (this.invoiceItem() === null) {

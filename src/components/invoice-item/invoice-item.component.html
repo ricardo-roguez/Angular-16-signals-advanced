@@ -1,6 +1,7 @@
   <div class='item-container list-group-item'>
     <div class="item-data">
       <span>{{ item.concept }} </span> 
+      <span>{{ item.code }} </span> 
       <span> Total factura: {{ item.amount }} € </span>
       <span> Estado: <span [ngClass]="{'badge text-bg-success': item.status==='DONE'}" class="badge text-bg-success"> {{ item.status }}</span> </span>
     </div>
