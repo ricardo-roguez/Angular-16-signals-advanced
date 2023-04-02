@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, computed, inject, OnInit, SettableSignal, signal, Signal } from '@angular/core';
+import { Component, computed, inject, OnInit, signal, Signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { map, switchMap, tap } from 'rxjs';
 import { Invoice } from '../../interfaces/invoice';
@@ -18,9 +18,8 @@ export class InvoiceListComponent implements OnInit {
   private activatedRoute = inject(ActivatedRoute);
   private invoiceService = inject(InvoiceService);
 
-  private invoicesInDoneSignabble: Signal<Invoice[]>;
-  invoiceListArray: SettableSignal<Invoice[]> = signal([]);
-  finishedCount: Signal<number> = signal(0);
+  invoicesInDone: Signal<Invoice[]> = signal([]);
+  invoiceList: Signal<Invoice[]> = signal([]);
   totalAmount: Signal<number> = signal(0);
 
   ngOnInit() {
@@ -28,7 +27,7 @@ export class InvoiceListComponent implements OnInit {
       .pipe(
         map(data => data.id),
         switchMap((id) => this.invoiceService.getInvoicesByClient(id)),
-        tap((data) => this.invoiceListArray = data),
+        tap((data) => this.invoiceList = data),
         tap(() => this.initSignals())
       )
       .subscribe()   
@@ -39,8 +38,7 @@ export class InvoiceListComponent implements OnInit {
   }
 
   private initSignals() {
-    this.invoicesInDoneSignabble = computed(() => this.invoiceListArray().filter((item) => item.status === 'DONE'))
-    this.finishedCount = computed(() => this.invoicesInDoneSignabble().length);
-    this.totalAmount = computed(() => this.invoicesInDoneSignabble().reduce((accumulator, invoice) =>  accumulator + invoice.amount, 0))
+    this.invoicesInDone = computed(() => this.invoiceList().filter((item) => item.status === 'DONE'));
+    this.totalAmount = computed(() => this.invoicesInDone().reduce((accumulator, invoice) =>  accumulator + invoice.amount, 0));
   }
 }

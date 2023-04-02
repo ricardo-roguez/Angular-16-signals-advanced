@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -10,9 +10,9 @@ import { Router } from '@angular/router';
   styleUrls: ['./client-list.component.css']
 })
 export class ClientListComponent {
-  route = inject(Router)
-  goToClient(clientId): void {
-    this.route.navigate([`/client/${clientId}`])
-  }
+  private route = inject(Router);
 
+  goToClient(clientId: number): void {
+    this.route.navigate([`/client/${clientId}`]);
+  }
 }

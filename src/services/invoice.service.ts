@@ -9,8 +9,9 @@ import { Invoice } from '../interfaces/invoice';
 export class InvoiceService {
   readonly localStorageItemName = 'invoice-list';
   readonly invoiceListUrl = 'assets/invoice-list.json';
+  readonly invoiceList: SettableSignal<Invoice[] | null> = signal(null);
+
   private clientId: number;
-  private invoiceList: SettableSignal<Invoice[] | null> = signal(null);
 
   invoiceItem: SettableSignal<Invoice | null> = signal(null);
 
@@ -25,15 +26,16 @@ export class InvoiceService {
 
     if (itemsStr) {
       this.invoiceList.set(JSON.parse(itemsStr));
-      return of(this.invoiceList)
+      return of(this.invoiceList);
     } else {
       return this.httpClient.get(this.invoiceListUrl)
         .pipe(
           tap((data: Invoice[]) => this.invoiceList.set(data)), 
           map(() => this.invoiceList)
-        )
+        );
     }
   }
+  
 
   private listenItemEffects(): void {
     effect(() => {
@@ -44,7 +46,7 @@ export class InvoiceService {
       console.log('Guardando item en la base de datos...', this.invoiceItem());
       
       this.invoiceList.update((list) => {
-        return list.map(item => item.invoiceId === this.invoiceItem().invoiceId ? this.invoiceItem() : item )
+        return list.map(item => item.invoiceId === this.invoiceItem().invoiceId ? this.invoiceItem() : item );
       });
     });
   }

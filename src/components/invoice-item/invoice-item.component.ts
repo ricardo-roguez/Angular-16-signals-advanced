@@ -15,7 +15,7 @@ import { InvoiceService } from '../../services/invoice.service';
   styleUrls: ['./invoice-item.component.css'],
 })
 export class InvoiceItemComponent {
-  @Input() item!: Invoice;
+  @Input() item: Invoice;
 
   private invoiceService = inject(InvoiceService);
 
