@@ -44,7 +44,7 @@ export class InvoiceService {
       
       console.log('Guardando item en la base de datos...', this.invoiceItem());
       
-      this.invoiceList.update((list) => {
+      this.invoiceList.mutate((list) => {
         return list.map(item => item.invoiceId === this.invoiceItem().invoiceId ? this.invoiceItem() : item );
       });
     });
