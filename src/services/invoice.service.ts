@@ -44,7 +44,7 @@ export class InvoiceService {
       
       console.log('Guardando item en la base de datos...', this.invoiceItem());
       
-      this.invoiceList.mutate((list) => {
+      this.invoiceList.update((list) => {
         return list.map(item => item.invoiceId === this.invoiceItem().invoiceId ? this.invoiceItem() : item );
       });
     });
@@ -52,6 +52,9 @@ export class InvoiceService {
 
   private listenItemListEffects(): void {
     effect(() => {
+      if (this.invoiceList() === null) {
+        return;
+      }
       localStorage.setItem(`${this.localStorageItemName}-${this.clientId}`, JSON.stringify(this.invoiceList()));
     });
   }
