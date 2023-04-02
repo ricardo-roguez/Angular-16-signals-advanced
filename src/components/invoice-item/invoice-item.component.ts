@@ -4,6 +4,7 @@ import {
   inject,
   Input,
 } from '@angular/core';
+import { INVOICE_STATUS } from '../../enum/invoice-status.enum';
 import { Invoice } from '../../interfaces/invoice';
 import { InvoiceService } from '../../services/invoice.service';
 
@@ -17,13 +18,14 @@ import { InvoiceService } from '../../services/invoice.service';
 export class InvoiceItemComponent {
   @Input() item: Invoice;
 
+  readonly INVOICE_STATUS = INVOICE_STATUS;
   private invoiceService = inject(InvoiceService);
 
   changeToDone(): void {
-    this.invoiceService.invoiceItem.set({ ...this.item, status: 'DONE' });
+    this.invoiceService.invoiceItem.set({ ...this.item, status: INVOICE_STATUS.DONE });
   }
 
   changeToPending(): void {
-    this.invoiceService.invoiceItem.set({ ...this.item, status: 'PENDING' });
+    this.invoiceService.invoiceItem.set({ ...this.item, status: INVOICE_STATUS.PENDING });
   }
 }
