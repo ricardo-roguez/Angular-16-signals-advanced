@@ -39,7 +39,7 @@ export class InvoiceListComponent implements OnInit {
   }
 
   private initSignals() {
-    this.invoicesInDoneSignabble = computed(() => this.invoiceListArray()?.filter((item) => item.status === 'DONE'))
+    this.invoicesInDoneSignabble = computed(() => this.invoiceListArray().filter((item) => item.status === 'DONE'))
     this.finishedCount = computed(() => this.invoicesInDoneSignabble().length);
     this.totalAmount = computed(() => this.invoicesInDoneSignabble().reduce((accumulator, invoice) =>  accumulator + invoice.amount, 0))
   }

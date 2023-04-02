@@ -20,12 +20,10 @@ export class InvoiceItemComponent {
   private invoiceService = inject(InvoiceService);
 
   changeToDone(): void {
-    this.item.status = 'DONE';
-    this.invoiceService.invoiceItem.update(() => this.item);
+    this.invoiceService.invoiceItem.set({ ...this.item, status: 'DONE' });
   }
 
   changeToPending(): void {
-    this.item.status = 'PENDING';
-    this.invoiceService.invoiceItem.update(() => this.item);
+    this.invoiceService.invoiceItem.set({ ...this.item, status: 'PENDING' });
   }
 }

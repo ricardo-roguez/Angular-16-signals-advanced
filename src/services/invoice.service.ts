@@ -8,9 +8,10 @@ import { Invoice } from '../interfaces/invoice';
 })
 export class InvoiceService {
   readonly localStorageItemName = 'invoice-list';
+  readonly invoiceListUrl = 'assets/invoice-list.json';
   private clientId: number;
+  private invoiceList: SettableSignal<Invoice[] | null> = signal(null);
 
-  invoiceList: SettableSignal<Invoice[] | null> = signal(null);
   invoiceItem: SettableSignal<Invoice | null> = signal(null);
 
   constructor(private httpClient: HttpClient) {
@@ -20,17 +21,13 @@ export class InvoiceService {
 
   getInvoicesByClient(clientId: number): Observable<SettableSignal<Invoice[]>> {
     this.clientId = clientId;
-    return this.getItemsFromStorage();
-
-  }
-
-  getItemsFromStorage():  Observable<SettableSignal<Invoice[]>> {
     const itemsStr = localStorage.getItem(`${this.localStorageItemName}-${this.clientId}`);
+
     if (itemsStr) {
       this.invoiceList.set(JSON.parse(itemsStr));
       return of(this.invoiceList)
     } else {
-      return this.httpClient.get('assets/invoice-list.json')
+      return this.httpClient.get(this.invoiceListUrl)
         .pipe(
           tap((data: Invoice[]) => this.invoiceList.set(data)), 
           map(() => this.invoiceList)
@@ -45,7 +42,10 @@ export class InvoiceService {
       }
       
       console.log('Guardando item en la base de datos...', this.invoiceItem());
-      this.invoiceList.update((list) => list);
+      
+      this.invoiceList.update((list) => {
+        return list.map(item => item.invoiceId === this.invoiceItem().invoiceId ? this.invoiceItem() : item )
+      });
     });
   }
 
