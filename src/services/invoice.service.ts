@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { effect, Injectable, SettableSignal, Signal, signal } from '@angular/core';
+import { effect, Injectable, WritableSignal, Signal, signal } from '@angular/core';
 import { map, Observable, of, tap, } from 'rxjs';
 import { Invoice } from '../interfaces/invoice';
 
@@ -9,11 +9,11 @@ import { Invoice } from '../interfaces/invoice';
 export class InvoiceService {
   readonly localStorageItemName = 'invoice-list';
   readonly invoiceListUrl = 'assets/invoice-list.json';
-  readonly invoiceList: SettableSignal<Invoice[] | null> = signal(null);
+  readonly invoiceList: WritableSignal<Invoice[] | null> = signal(null);
 
   private clientId: number;
 
-  invoiceItem: SettableSignal<Invoice | null> = signal(null);
+  invoiceItem: WritableSignal<Invoice | null> = signal(null);
 
   constructor(private httpClient: HttpClient) {
     this.listenItemEffects();
@@ -44,7 +44,7 @@ export class InvoiceService {
       
       console.log('Guardando item en la base de datos...', this.invoiceItem());
       
-      this.invoiceList.update((list) => {
+      this.invoiceList.update((list: Invoice[]) => {
         return list.map(item => item.invoiceId === this.invoiceItem().invoiceId ? this.invoiceItem() : item );
       });
     });
