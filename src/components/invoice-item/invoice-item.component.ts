@@ -22,20 +22,20 @@ export class InvoiceItemComponent {
   private invoiceService = inject(InvoiceService);
 
   changeToDone(): void {
-    const updatedInvoice = {...this.item, status: INVOICE_STATUS.DONE};
-    this.updateData(updatedInvoice);
+    this.item.status = INVOICE_STATUS.DONE;
+    this.updateData();
   }
 
   changeToPending(): void {
-    const updatedInvoice = {...this.item, status: INVOICE_STATUS.PENDING};
-    this.updateData(updatedInvoice);
+    this.item.status = INVOICE_STATUS.PENDING;
+    this.updateData();
   }
 
-  private updateData(updatedInvoice: Invoice): void {
-    this.invoiceService.invoiceItem.set(updatedInvoice);
+  private updateData(): void {
+    this.invoiceService.invoiceItem.set(this.item);
 
     this.invoiceService.invoiceList.update((list: Invoice[]) => {
-      return list.map(item => item.invoiceId === updatedInvoice.invoiceId ? updatedInvoice : item );
+      return list.map(item => item.invoiceId === this.item.invoiceId ? this.item : item );
     });
   }
 }

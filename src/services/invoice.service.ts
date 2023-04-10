@@ -20,19 +20,16 @@ export class InvoiceService {
     this.listenItemListEffects();
   }
 
-  getInvoicesByClient(clientId: number): Observable<Signal<Invoice[]>> {
+  getInvoicesByClient(clientId: number): Observable<Invoice[]> {
     this.clientId = clientId;
     const itemsStr = localStorage.getItem(`${this.localStorageItemName}-${this.clientId}`);
 
     if (itemsStr) {
       this.invoiceList.set(JSON.parse(itemsStr));
-      return of(this.invoiceList);
+      return of(JSON.parse(itemsStr));
     } else {
       return this.httpClient.get(this.invoiceListUrl)
-        .pipe(
-          tap((data: Invoice[]) => this.invoiceList.set(data)), 
-          map(() => this.invoiceList)
-        );
+        .pipe(tap((data: Invoice[]) => this.invoiceList.set(data)));
     }
   }
   
