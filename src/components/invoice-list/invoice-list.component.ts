@@ -20,7 +20,6 @@ export class InvoiceListComponent {
   private activatedRoute = inject(ActivatedRoute);
   private invoiceService = inject(InvoiceService);
  
-
   invoiceList: Signal<Invoice[]> = signal([]);
   invoicesInDone: Signal<Invoice[]> = signal([]);
   totalAmountInDone: Signal<number> = signal(0);
@@ -31,8 +30,8 @@ export class InvoiceListComponent {
         .pipe(
           map(params => params.id),
           switchMap((clientId: number) => this.invoiceService.getInvoicesByClient(clientId)),
+          tap(() => this.initSignals())
         ));
-      this.initSignals();
   }
 
   backToClientList(): void {
@@ -40,7 +39,8 @@ export class InvoiceListComponent {
   }
 
   private initSignals(): void {
-    this.invoicesInDone = computed(() => this.invoiceService.invoiceList().filter((item) => item.status === INVOICE_STATUS.DONE));
+    this.invoiceList = computed(() => this.invoiceService.invoiceList());
+    this.invoicesInDone = computed(() => this.invoiceList().filter((item) => item.status === INVOICE_STATUS.DONE));
     this.totalAmountInDone = computed(() => this.invoicesInDone().reduce((accumulator, invoice) => accumulator + invoice.amount, 0));
   }
 }

@@ -48,6 +48,7 @@ export class InvoiceService {
       if (this.invoiceList() === null) {
         return;
       }
+      
       console.log('Guardando listado en localStorage...');
       localStorage.setItem(`${this.localStorageItemName}-${this.clientId}`, JSON.stringify(this.invoiceList()));
     });
