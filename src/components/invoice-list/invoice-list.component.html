@@ -4,7 +4,7 @@
   </button>
 </p>
 <p>Facturas en <span class="badge text-bg-success">Done</span> {{ invoicesInDone().length }} de {{ invoiceList().length }}</p>
-<p>Total facturado facturas en <span class="badge text-bg-success">Done</span> {{ totalAmountInDone() }}</p>
+<p>Total facturado facturas en <span class="badge text-bg-success">Done</span> {{ totalAmountInDone() }} €</p>
 
 <div class="list-group">
   <app-invoice-item [item]="invoiceItem" *ngFor="let invoiceItem of invoiceList()" />

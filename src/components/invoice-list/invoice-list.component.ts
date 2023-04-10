@@ -1,6 +1,5 @@
 import { CommonModule } from '@angular/common';
 import { Component, computed, inject, OnDestroy, OnInit, signal, Signal } from '@angular/core';
-import { fromObservable } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router } from '@angular/router';
 import { map, Subject, switchMap, takeUntil, tap } from 'rxjs';
 import { INVOICE_STATUS } from '../../enum/invoice-status.enum';
