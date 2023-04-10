@@ -7,9 +7,6 @@
 <p>Total facturado facturas en <span class="badge text-bg-success">Done</span> {{ totalAmountInDone() }}</p>
 
 <div class="list-group">
-  <app-invoice-item
-    [item]="invoiceItem"
-    *ngFor="let invoiceItem of invoiceList()">
-  </app-invoice-item>
+  <app-invoice-item [item]="invoiceItem" *ngFor="let invoiceItem of invoiceList()" />
 </div>
 

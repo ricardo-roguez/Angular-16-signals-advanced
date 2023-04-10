@@ -1,5 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
+import { ROUTES_NAME } from '../../app-routing.module';
 
 @Component({
   selector: 'app-client-list',
@@ -11,6 +12,6 @@ export class ClientListComponent {
   private route = inject(Router);
 
   goToClient(clientId: number): void {
-    this.route.navigate([`/client/${clientId}`]);
+    this.route.navigate([`/${ROUTES_NAME.CLIENT}/${clientId}`]);
   }
 }

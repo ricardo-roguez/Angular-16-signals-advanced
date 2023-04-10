@@ -1,14 +1,15 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ClientListComponent } from './components/client-list/client-list.component';
-import { InvoiceListComponent } from './components/invoice-list/invoice-list.component';
 
+export const ROUTES_NAME = {
+  CLIENT: 'client'
+}
 
 const routes: Routes = [{
   path: '',
   children: [
-    { path: '', component: ClientListComponent },
-    { path: 'client/:id', component: InvoiceListComponent },
+    { path: '', loadComponent: () => import('./components/client-list/client-list.component').then(c => c.ClientListComponent)},
+    { path:  `${ROUTES_NAME.CLIENT}/:id`, loadComponent: () => import('./components/invoice-list/invoice-list.component').then(c => c.InvoiceListComponent)},
   ],
 }];
 

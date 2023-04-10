@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, computed, inject, OnDestroy, OnInit, signal, Signal } from '@angular/core';
+import { fromObservable } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router } from '@angular/router';
 import { map, Subject, switchMap, takeUntil, tap } from 'rxjs';
 import { INVOICE_STATUS } from '../../enum/invoice-status.enum';
@@ -20,11 +21,11 @@ export class InvoiceListComponent implements OnInit, OnDestroy {
   private invoiceService = inject(InvoiceService);
   private onDestroy$ = new Subject<void>();
 
-  invoicesInDone: Signal<Invoice[]> = signal([]);
   invoiceList: Signal<Invoice[]> = signal([]);
+  invoicesInDone: Signal<Invoice[]> = signal([]);
   totalAmountInDone: Signal<number> = signal(0);
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.activatedRoute.params
       .pipe(
         map(params => params.id),
