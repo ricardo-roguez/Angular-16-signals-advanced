@@ -10,14 +10,12 @@ export class InvoiceService {
   readonly localStorageItemName = 'invoice-list';
   readonly invoiceListUrl = 'assets/invoice-list.json';
   readonly invoiceList: WritableSignal<Invoice[] | null> = signal(null);
-  readonly invoiceItem: WritableSignal<Invoice | null> = signal(null);
 
   private clientId: number;
   private httpClient = inject(HttpClient);
 
   constructor() {
-    this.listenItemEffects();
-    this.listenItemListEffects();
+    this.listenEffects();
   }
 
   getInvoicesByClient(clientId: number): Observable<Signal<Invoice[]>> {
@@ -35,18 +33,8 @@ export class InvoiceService {
         );
     }
   }
-  
-  private listenItemEffects(): void {
-    effect(() => {
-      if (this.invoiceItem() === null) {
-        return;
-      }
-      
-      console.log('Guardando item en la base de datos...', this.invoiceItem());
-    });
-  }
 
-  private listenItemListEffects(): void {
+  private listenEffects(): void {
     effect(() => {
       if (this.invoiceList() === null) {
         return;

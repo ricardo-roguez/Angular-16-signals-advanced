@@ -32,8 +32,6 @@ export class InvoiceItemComponent {
   }
 
   private updateData(updatedInvoice: Invoice): void {
-    this.invoiceService.invoiceItem.set(updatedInvoice);
-
     this.invoiceService.invoiceList.update((list: Invoice[]) => {
       return list.map(item => item.invoiceId === updatedInvoice.invoiceId ? updatedInvoice : item );
     });
